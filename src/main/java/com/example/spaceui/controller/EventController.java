@@ -2,6 +2,7 @@ package com.example.spaceui.controller;
 
 import com.example.spaceui.model.Event;
 import com.example.spaceui.service.EventService;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,8 +18,18 @@ public class EventController {
     }
 
     @GetMapping
-    public String getAllEvents(Model model) {
-        model.addAttribute("events", eventService.getAllEvents());
+    public String getAllEvents(
+            Model model,
+            @RequestParam(value = "keyword", defaultValue = "") String keyword,
+            @RequestParam(value = "page", defaultValue = "0") int page
+    ) {
+        Page<Event> eventsPage = eventService.findAllEvents(keyword, page);
+
+        model.addAttribute("events", eventsPage.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", eventsPage.getTotalPages());
+        model.addAttribute("keyword", keyword);
+
         return "events/list";
     }
 

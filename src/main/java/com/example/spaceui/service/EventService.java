@@ -2,7 +2,9 @@ package com.example.spaceui.service;
 
 import com.example.spaceui.model.Event;
 import com.example.spaceui.repository.EventRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,11 +13,23 @@ import java.util.Optional;
 @Service
 public class EventService {
 
-    @Autowired
-    private EventRepository eventRepository;
+    private final EventRepository eventRepository;
+
+    public EventService(EventRepository eventRepository) {
+        this.eventRepository = eventRepository;
+    }
 
     public List<Event> getAllEvents() {
         return eventRepository.findAll();
+    }
+
+    public Page<Event> findAllEvents(String keyword, int page) {
+        Pageable pageable = PageRequest.of(page, 5);
+
+        if (keyword == null || keyword.isEmpty()) {
+            return eventRepository.findAll(pageable);
+        }
+        return eventRepository.search(keyword, pageable);
     }
 
     public Optional<Event> getEventById(Long id) {
