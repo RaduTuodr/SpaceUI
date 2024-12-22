@@ -2,10 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <title>Create Event</title>
-    <!-- Include Bootstrap CSS-->
+    <!-- Include Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        /* You can change this value to adjust the width of the form */
         .form-container {
             width: 80%; /* Default to 80% of screen width */
             max-width: 900px; /* Optional: set a max width for large screens */
@@ -52,16 +51,26 @@
             <label for="resolved" class="form-check-label">Resolved</label>
         </div>
 
-        <!-- Planet ID -->
+        <!-- Planet Dropdown -->
         <div class="mb-1">
-            <label for="planetId" class="form-label">Planet ID:</label>
-            <input type="number" id="planetId" th:field="*{planetId}" class="form-control" />
+            <label for="planetId" class="form-label">Planet:</label>
+            <select id="planetId" th:field="*{planetId}" class="form-select">
+                <option th:each="planet : ${planets}"
+                        th:value="${planet.id}"
+                        th:text="${planet.name}">
+                </option>
+            </select>
         </div>
 
-        <!-- Species ID -->
-        <div>
-            <label for="speciesId" class="form-label">Species ID:</label>
-            <input type="number" id="speciesId" th:field="*{speciesId}" class="form-control" />
+        <!-- Species Dropdown -->
+        <div class="mb-1">
+            <label for="speciesId" class="form-label">Species:</label>
+            <select id="speciesId" th:field="*{speciesId}" class="form-select">
+                <option th:each="specie : ${species}"
+                        th:value="${specie.id}"
+                        th:text="${specie.name}">
+                </option>
+            </select>
         </div>
 
         <!-- Buttons -->

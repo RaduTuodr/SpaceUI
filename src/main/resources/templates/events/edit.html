@@ -53,15 +53,27 @@
         </div>
 
         <!-- Planet ID -->
-        <div class="mb-3">
+        <div class="mb-1">
             <label for="planetId" class="form-label">Planet ID:</label>
-            <input type="number" id="planetId" th:field="*{planetId}" class="form-control" />
+            <select id="planetId" th:field="*{planetId}" class="form-select">
+                <option th:each="planet : ${planets}"
+                        th:value="${planet.getId()}"
+                        th:text="${planet.getName()}"
+                    >
+                </option>
+            </select>
         </div>
 
         <!-- Species ID -->
-        <div class="mb-3">
+        <div class="mb-1">
             <label for="speciesId" class="form-label">Species ID:</label>
-            <input type="number" id="speciesId" th:field="*{speciesId}" class="form-control" />
+            <select id="speciesId" th:field="*{speciesId}" class="form-control">
+                <option th:each="specie : ${species}"
+                        th:value="${specie.getId()}"
+                        th:tel="${specie.getName()}"
+                    >
+                </option>
+            </select>
         </div>
 
         <!-- Buttons -->
