@@ -18,4 +18,8 @@ public class SpecieService {
     public List<Species> getAllSpecies() {
         return speciesRepository.findAll();
     }
+
+    public Species addSpecies(Species species) {
+        return speciesRepository.save(species);
+    }
 }

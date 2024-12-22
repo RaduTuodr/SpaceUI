@@ -10,16 +10,14 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @Column(nullable = false, length = 40)
-    @Column(length = 40)
+    @Column(nullable = false, length = 40)
     private String name;
 
     @Enumerated(EnumType.STRING)
-//    @Column(nullable = false)
+    @Column(nullable = false)
     private EventType type;
 
-//    @Column(nullable = false)
-    @Column
+    @Column(nullable = false)
     private String description;
 
     private LocalDate date;

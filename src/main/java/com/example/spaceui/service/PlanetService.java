@@ -18,4 +18,8 @@ public class PlanetService {
     public List<Planet> getAllPlanets() {
         return planetRepository.findAll();
     }
+
+    public Planet addPlanet(Planet planet) {
+        return planetRepository.save(planet);
+    }
 }
