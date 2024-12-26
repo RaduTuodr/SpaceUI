@@ -5,6 +5,7 @@ import com.example.spaceui.repository.PlanetRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PlanetService {
@@ -21,5 +22,9 @@ public class PlanetService {
 
     public Planet addPlanet(Planet planet) {
         return planetRepository.save(planet);
+    }
+
+    public Optional<Planet> getPlanetById(Long planetId) {
+        return planetRepository.findById(planetId);
     }
 }

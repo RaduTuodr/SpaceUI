@@ -71,6 +71,8 @@
                 <th>Date</th>
                 <th>Description</th>
                 <th>Resolved</th>
+                <th>Planet</th> <!-- New column for planet -->
+                <th>Species</th> <!-- New column for species -->
                 <th>Actions</th>
             </tr>
             </thead>
@@ -85,6 +87,8 @@
                     <span th:if="${event.resolved}" th:text="'✅'" class="text-success"></span>
                     <span th:if="${!event.resolved}" th:text="'❌'" class="text-danger"></span>
                 </td>
+                <td th:text="${planets[event.id]}"></td> <!-- Planet name -->
+                <td th:text="${planets[event.id]}"></td> <!-- Species name -->
                 <td>
                     <a th:href="@{/events/edit/{id}(id=${event.id})}" class="btn btn-warning btn-sm">Edit</a>
                     <a th:href="@{/events/delete/{id}(id=${event.id})}"

@@ -1,6 +1,8 @@
 package com.example.spaceui.controller;
 
 import com.example.spaceui.model.Event;
+import com.example.spaceui.model.Planet;
+import com.example.spaceui.model.Species;
 import com.example.spaceui.service.EventService;
 import com.example.spaceui.service.PlanetService;
 import com.example.spaceui.service.SpecieService;
@@ -9,6 +11,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.*;
 
 @Controller
 @RequestMapping("/events")
@@ -32,13 +36,27 @@ public class EventController {
     ) {
         Page<Event> eventsPage = eventService.findAllEvents(keyword, page);
 
+        Map<Long, String> planetNamesMap = new HashMap<>();
+        Map<Long, String> speciesNamesMap = new HashMap<>();
+
+        for (Event event : eventsPage.getContent()) {
+            Optional<Planet> planet = planetService.getPlanetById(event.getPlanetId());
+            Optional<Species> species = specieService.getSpeciesById(event.getSpeciesId());
+
+            planetNamesMap.put(event.getId(), planet.map(Planet::getName).orElse("-"));
+            speciesNamesMap.put(event.getId(), species.map(Species::getName).orElse("-"));
+        }
+
         model.addAttribute("events", eventsPage.getContent());
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", eventsPage.getTotalPages());
         model.addAttribute("keyword", keyword);
+        model.addAttribute("planets", planetNamesMap);
+        model.addAttribute("species", speciesNamesMap);
 
         return "events/list";
     }
+
 
     @GetMapping("/create")
     public String showCreateForm(Model model) {
