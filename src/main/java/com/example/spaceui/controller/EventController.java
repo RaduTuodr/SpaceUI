@@ -40,11 +40,28 @@ public class EventController {
         Map<Long, String> speciesNamesMap = new HashMap<>();
 
         for (Event event : eventsPage.getContent()) {
-            Optional<Planet> planet = planetService.getPlanetById(event.getPlanetId());
-            Optional<Species> species = specieService.getSpeciesById(event.getSpeciesId());
+            try {
+                if (event.getPlanetId() == null) {
+                    planetNamesMap.put(event.getId(), "-");
+                    continue;
+                }
+                Optional<Planet> planet = planetService.getPlanetById(event.getPlanetId());
+                planetNamesMap.put(event.getId(), planet.map(Planet::getName).orElse("-"));
+            } catch (IllegalArgumentException e) {
+                System.out.println("Planet not found");
+            }
 
-            planetNamesMap.put(event.getId(), planet.map(Planet::getName).orElse("-"));
-            speciesNamesMap.put(event.getId(), species.map(Species::getName).orElse("-"));
+            try {
+                System.out.println(event.getSpeciesId());
+                if (event.getSpeciesId() == null) {
+                    speciesNamesMap.put(event.getId(), "-");
+                    continue;
+                }
+                Optional<Species> species = specieService.getSpeciesById(event.getSpeciesId());
+                speciesNamesMap.put(event.getId(), species.map(Species::getName).orElse("-"));
+            } catch (IllegalArgumentException e) {
+                System.out.println("Species not found");
+            }
         }
 
         model.addAttribute("events", eventsPage.getContent());

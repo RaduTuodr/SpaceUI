@@ -54,7 +54,7 @@
 
         <!-- Planet ID -->
         <div class="mb-1">
-            <label for="planetId" class="form-label">Planet ID:</label>
+            <label for="planetId" class="form-label">Planet:</label>
             <select id="planetId" th:field="*{planetId}" class="form-select">
                 <option th:each="planet : ${planets}"
                         th:value="${planet.getId()}"
@@ -66,12 +66,11 @@
 
         <!-- Species ID -->
         <div class="mb-1">
-            <label for="speciesId" class="form-label">Species ID:</label>
+            <label for="speciesId" class="form-label">Species:</label>
             <select id="speciesId" th:field="*{speciesId}" class="form-control">
                 <option th:each="specie : ${species}"
                         th:value="${specie.getId()}"
-                        th:tel="${specie.getName()}"
-                    >
+                        th:text="${specie.getName()}">
                 </option>
             </select>
         </div>
